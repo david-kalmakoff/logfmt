@@ -26,6 +26,8 @@ func main() {
 		m := make(map[string]any)
 		err := json.Unmarshal([]byte(s), &m)
 		if err != nil {
+			fmt.Println(s)
+			log.Println("^could not unmarshal")
 			continue
 		}
 
@@ -42,9 +44,16 @@ func main() {
 		}
 		fmt.Printf("%s%s => ", level, Reset)
 
-		tStr := m["time"].(string)
+		tStr, ok := m["time"].(string)
+		if !ok {
+			fmt.Println(s)
+			log.Println("^time was not a string")
+			continue
+		}
 		t, err := time.Parse(time.RFC3339Nano, tStr)
 		if err != nil {
+			fmt.Println(s)
+			log.Println("^could not parse time")
 			continue
 		}
 		fmt.Printf("%s", t.Format(time.DateTime))
