@@ -26,8 +26,8 @@ func main() {
 		m := make(map[string]any)
 		err := json.Unmarshal([]byte(s), &m)
 		if err != nil {
+			// just display log normally if it is not in JSON format
 			fmt.Println(s)
-			log.Println("^could not unmarshal")
 			continue
 		}
 
